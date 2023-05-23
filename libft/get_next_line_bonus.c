@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:52:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/19 13:06:59 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:43:39 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,10 @@ static char	*read_file(int fd, char *res)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[FOPEN_MAX];
-	//static char	*buffer[OPEN_MAX];
+	static char	*buffer[OPEN_MAX];
 	char		*line;
 
-	//if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FOPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
 		return (0);
 	buffer[fd] = read_file(fd, buffer[fd]);
 	if (!buffer[fd])

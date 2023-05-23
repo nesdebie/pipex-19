@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/23 09:47:24 by nesdebie          #+#    #+#             */
+/*   Updated: 2023/05/23 09:47:46 by nesdebie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
-void	exit_handler()
+void	exit_handler(void)
 {
 	ft_putendl_fd("./pipex infile cmd cmd outfile", 2);
 	exit(EXIT_SUCCESS);

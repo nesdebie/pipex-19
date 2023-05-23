@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 22:55:21 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/19 13:06:19 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:48:46 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-//# include <sys/syslimits.h>
-#include <stdio.h>
+# include <sys/syslimits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -51,7 +50,7 @@ char	*ft_strjoin(char const *str1, char const *str2);
 size_t	ft_strlcat(char *dest, char const *src, size_t n);
 size_t	ft_strlcpy(char *dest, char const *src, size_t n);
 size_t	ft_strlen(char const *str);
-int     ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(char const *s1, char const *s2, size_t n);
 char	*ft_strnstr(char const *str, char const *tofind, size_t n);
 char	*ft_strrchr(char const *str, int c);
