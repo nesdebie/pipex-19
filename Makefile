@@ -1,37 +1,43 @@
-NAME = pipex
+NAME	= pipex
 
-CC = cc
+SRCS 	=	srcs/pipex.c \
+			srcs/utils.c
 
-CFLAGS = -Werror -Wall -Wextra
+SRCS_B	=	srcs/pipex_bonus.c \
+			srcs/utils_bonus.c
 
-RM = rm -rf
+OBJS 	= ${SRCS:.c=.o}
 
-SRCS = 	mandatory/pipex.c\
-		mandatory/utils.c\
-		libft/libft.a
+OBJS_B	= ${SRCS_B:.c=.o}
 
-SRCS_BONUS = 	bonus/pipex_bonus.c\
-				bonus/utils_bonus.c\
-				libft/libft.a\
+HEADER	= includes
 
-$(NAME) :
-	make all -C libft
-	gcc $(CFLAGS) $(SRCS) -o $(NAME)
+CC 		= cc
 
-all : $(NAME)
+CFLAGS 	= -Wall -Wextra -Werror
 
-fclean : clean
-	$(RM) $(NAME)
-	make fclean -C libft
+.c.o:		%.o : %.c
+					$(CC) ${CFLAGS} -I${HEADER} -c $< -o $(<:.c=.o)
 
-clean :
-	$(RM) $(NAME)
-	make clean -C libft
+all: 		${NAME}
 
-re : fclean all
+${NAME}:	${OBJS}
+					make re -C ./libft
+					$(CC) ${OBJS} -Llibft -lft -o ${NAME}
 
-bonus : clean
-	make all -C libft
-	gcc $(CFLAGS) $(SRCS_BONUS) -o $(NAME)
 
-.PHONY: all clean fclean re bonus
+bonus:		${OBJS_B}
+					make re -C ./libft
+					$(CC) ${OBJS_B} -Llibft -lft -o ${NAME}
+
+clean:
+					make clean -C ./libft
+					rm -f ${OBJS} ${OBJS_B}
+
+fclean: 	clean
+					make fclean -C ./libft
+					rm -f $(NAME)
+
+re:			fclean all
+
+re_bonus:	all clean fclean re bonus
