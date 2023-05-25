@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:53:59 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/23 09:47:13 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:04:08 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	here_doc_put_in(char **av, int *p_fd)
 	close(p_fd[0]);
 	while (1)
 	{
-		ret = get_next_line(0);
+		ret = get_next_line(HEREDOC);
 		if (!ft_strncmp(ret, av[2], ft_strlen(av[2])))
 		{
 			free(ret);
@@ -62,7 +62,7 @@ void	here_doc(char **av)
 	{
 		close(p_fd[1]);
 		dup2(p_fd[0], 0);
-		wait(NULL);
+		wait(0);
 	}
 }
 
@@ -102,7 +102,7 @@ int	main(int ac, char **av, char **env)
 		if (ac < 6)
 			exit_handler();
 		i = 3;
-		fd_out = open_file(av[ac - 1], 2);
+		fd_out = open_file(av[ac - 1], 1);
 		here_doc(av);
 	}
 	else

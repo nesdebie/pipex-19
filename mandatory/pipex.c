@@ -6,17 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:03 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/19 13:19:09 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:09:01 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-static void	exit_handler(void)
-{
-	ft_putendl_fd("./pipex infile cmd cmd outfile", 2);
-	exit(EXIT_SUCCESS);
-}
 
 void	exec(char *cmd, char **env)
 {
@@ -24,6 +18,8 @@ void	exec(char *cmd, char **env)
 	char	*path;
 
 	s_cmd = ft_split(cmd, ' ');
+	if (!s_cmd)
+		exit(EXIT_FAILURE);
 	path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
 	{
@@ -62,7 +58,10 @@ int	main(int ac, char **av, char **envp)
 	pid_t	pid;
 
 	if (ac != 5)
-		exit_handler();
+	{
+		ft_putendl_fd("./pipex file1 cmd1 cmd2 file2", 2);
+		exit(EXIT_SUCCESS);
+	}
 	if (pipe(p_fd) == -1)
 		exit(EXIT_FAILURE);
 	pid = fork();
