@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:47:24 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 11:26:21 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:33:25 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_path(char *cmd, char **envp, int i)
 	char	*part_path;
 
 	if (access(cmd, F_OK) == 0)
-			return (cmd);
+		return (cmd);
 	while (!ft_strnstr(envp[i], "PATH", 4))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
