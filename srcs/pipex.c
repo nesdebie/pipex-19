@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:03 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 11:20:58 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:10:37 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ static void	exec(char *cmd, char **env)
 	path = get_path(s_cmd[0], env, 0);
 	if (!path)
 	{
+		ft_putstr_fd("pipex: command not found", 2);
+		ft_putendl_fd(s_cmd[0], 2);
 		ft_free_tab(s_cmd);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	if (execve(path, s_cmd, env) == -1)
 	{
-		ft_putstr_fd("pipex: command not found: ", 2);
-		ft_putendl_fd(s_cmd[0], 2);
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(s_cmd[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
 		ft_free_tab(s_cmd);
-		exit(EXIT_SUCCESS);
+		exit(126);
 	}
 }
 

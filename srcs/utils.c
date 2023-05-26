@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:41 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 11:34:05 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:07:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int	open_file(char *file, int in_out)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (ret == -1)
 	{
-		ft_putstr_fd("pipex: file not found: ", 2);
-		ft_putendl_fd(file, 2);
-		exit(EXIT_SUCCESS);
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		exit(1);
 	}
 	return (ret);
 }
