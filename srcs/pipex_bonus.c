@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:53:59 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 10:47:53 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:22:26 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	exec(char *cmd, char **env)
 	s_cmd = ft_split(cmd, ' ');
 	if (!s_cmd)
 		exit(EXIT_FAILURE);
-	path = get_path(s_cmd[0], env);
+	path = get_path(s_cmd[0], env, 0);
 	if (!path)
 	{
 		ft_free_tab(s_cmd);

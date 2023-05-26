@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:12 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 10:39:16 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:20:42 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,10 @@
 # define PIPEX_H
 
 # include "../libft/libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>  
-# include <stdlib.h>
+# include <fcntl.h>
 
 int		open_file(char *file, int n);
-char	*get_path(char *cmd, char **env);
-void	ft_free_tab(char **tab);
+char	*get_path(char *cmd, char **env, int i);
+char	*ft_free_tab(char **tab);
 
 #endif

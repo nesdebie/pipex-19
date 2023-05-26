@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:47:24 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/25 13:03:19 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:26:21 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,29 @@
 
 void	exit_handler(void)
 {
-	ft_putendl_fd("./pipex infile cmd cmd outfile", 2);
+	ft_putendl_fd("./pipex file1 cmd1 cmd2 file2", 2);
 	exit(EXIT_SUCCESS);
 }
 
-int	open_file(char *file, int in_or_out)
+int	open_file(char *file, int in_out)
 {
 	int	ret;
 
-	if (in_or_out == 0)
+	ret = 0;
+	if (in_out == 0)
 		ret = open(file, O_RDONLY, 0777);
-	if (in_or_out == 1)
+	if (in_out == 1)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (ret == -1)
+	{
+		ft_putstr_fd("pipex: file not found: ", 2);
+		ft_putendl_fd(file, 2);
+		exit(EXIT_SUCCESS);
+	}
 	return (ret);
 }
 
-void	ft_free_tab(char **tab)
+char	*ft_free_tab(char **tab)
 {
 	size_t	i;
 
@@ -40,16 +47,17 @@ void	ft_free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+	return (0);
 }
 
-char	*get_path(char *cmd, char **envp)
+char	*get_path(char *cmd, char **envp, int i)
 {
 	char	**paths;
 	char	*path;
-	int		i;
 	char	*part_path;
 
-	i = 0;
+	if (access(cmd, F_OK) == 0)
+			return (cmd);
 	while (!ft_strnstr(envp[i], "PATH", 4))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
@@ -67,6 +75,5 @@ char	*get_path(char *cmd, char **envp)
 		if (path)
 			free(path);
 	}
-	ft_free_tab(paths);
-	return (0);
+	return (ft_free_tab(paths));
 }
