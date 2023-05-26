@@ -6,13 +6,13 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:03 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/25 12:59:16 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 10:39:09 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	exec(char *cmd, char **env)
+static void	exec(char *cmd, char **env)
 {
 	char	**s_cmd;
 	char	*path;

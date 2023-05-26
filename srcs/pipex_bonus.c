@@ -6,13 +6,13 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:53:59 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/25 12:58:34 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/05/26 10:47:53 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	exec(char *cmd, char **env)
+static void	exec(char *cmd, char **env)
 {
 	char	**s_cmd;
 	char	*path;
@@ -35,7 +35,7 @@ void	exec(char *cmd, char **env)
 	}
 }
 
-void	here_doc_put_in(char **av, int *p_fd)
+static void	heredoc_input(char **av, int *p_fd)
 {
 	char	*ret;
 
@@ -55,7 +55,7 @@ void	here_doc_put_in(char **av, int *p_fd)
 	}
 }
 
-void	here_doc(char **av)
+static void	here_doc(char **av)
 {
 	int		p_fd[2];
 	pid_t	pid;
@@ -66,7 +66,7 @@ void	here_doc(char **av)
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	if (!pid)
-		here_doc_put_in(av, p_fd);
+		heredoc_input(av, p_fd);
 	else
 	{
 		close(p_fd[1]);
@@ -75,7 +75,7 @@ void	here_doc(char **av)
 	}
 }
 
-void	do_pipe(char *cmd, char **env)
+static void	ft_pipe(char *cmd, char **env)
 {
 	pid_t	pid;
 	int		p_fd[2];
@@ -122,7 +122,7 @@ int	main(int ac, char **av, char **env)
 		dup2(fd_in, 0);
 	}
 	while (i < ac - 2)
-		do_pipe(av[i++], env);
+		ft_pipe(av[i++], env);
 	dup2(fd_out, 1);
 	exec(av[ac - 2], env);
 }
