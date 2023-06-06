@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:47:24 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 11:33:25 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/06 11:27:51 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,34 @@ void	exit_handler(void)
 	exit(EXIT_SUCCESS);
 }
 
-int	open_file(char *file, int in_out)
+static int	no_path(char **av, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strnstr(envp[i], "PATH", 4))
+			return (EXIT_SUCCESS);
+		i++;
+	}
+	i = 2;
+	while (av[i + 1])
+	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(av[i], 2);
+		ft_putendl_fd(" : No such file or directory", 2);
+		i++;
+	}
+	return (EXIT_FAILURE);
+}
+
+int	open_file(char *file, int in_out, char **av, char **envp)
 {
 	int	ret;
 
+	if (no_path(av, envp))
+		exit(127);
 	ret = 0;
 	if (in_out == 0)
 		ret = open(file, O_RDONLY, 0777);

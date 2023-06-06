@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:03 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 15:10:37 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:25:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ static void	exec(char *cmd, char **env)
 	path = get_path(s_cmd[0], env, 0);
 	if (!path)
 	{
-		ft_putstr_fd("pipex: command not found", 2);
-		ft_putendl_fd(s_cmd[0], 2);
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(s_cmd[0], 2);
+		ft_putendl_fd(" : command not found", 2);
 		ft_free_tab(s_cmd);
 		exit(127);
 	}
@@ -60,11 +61,33 @@ static void	parent(char **av, int *p_fd, char **env)
 	exec(av[3], env);
 }
 
+static int	no_path(char **av, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strnstr(envp[i], "PATH", 4))
+			return (EXIT_SUCCESS);
+		i++;
+	}
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(av[2], 2);
+	ft_putendl_fd(" : No such file or directory", 2);
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(av[3], 2);
+	ft_putendl_fd(" : No such file or directory", 2);
+	return (EXIT_FAILURE);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	int		p_fd[2];
 	pid_t	pid;
 
+	if (no_path(av, envp))
+		exit(127);
 	if (ac != 5)
 	{
 		ft_putendl_fd("./pipex file1 cmd1 cmd2 file2", 2);

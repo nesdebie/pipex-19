@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:53:59 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/05/26 11:22:26 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:26:15 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,19 @@ static void	exec(char *cmd, char **env)
 	path = get_path(s_cmd[0], env, 0);
 	if (!path)
 	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(s_cmd[0], 2);
+		ft_putendl_fd(" : command not found", 2);
 		ft_free_tab(s_cmd);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	if (execve(path, s_cmd, env) == -1)
 	{
-		ft_putstr_fd("pipex: command not found: ", 2);
-		ft_putendl_fd(s_cmd[0], 2);
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(s_cmd[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
 		ft_free_tab(s_cmd);
-		exit(EXIT_SUCCESS);
+		exit(126);
 	}
 }
 
@@ -98,7 +102,7 @@ static void	ft_pipe(char *cmd, char **env)
 	}
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	int		i;
 	int		fd_in;
@@ -111,18 +115,18 @@ int	main(int ac, char **av, char **env)
 		if (ac < 6)
 			exit_handler();
 		i = 3;
-		fd_out = open_file(av[ac - 1], 1);
+		fd_out = open_file(av[ac - 1], 1, av, envp);
 		here_doc(av);
 	}
 	else
 	{
 		i = 2;
-		fd_in = open_file(av[1], 0);
-		fd_out = open_file(av[ac - 1], 1);
+		fd_in = open_file(av[1], 0, av, envp);
+		fd_out = open_file(av[ac - 1], 1, av, envp);
 		dup2(fd_in, 0);
 	}
 	while (i < ac - 2)
-		ft_pipe(av[i++], env);
+		ft_pipe(av[i++], envp);
 	dup2(fd_out, 1);
-	exec(av[ac - 2], env);
+	exec(av[ac - 2], envp);
 }
