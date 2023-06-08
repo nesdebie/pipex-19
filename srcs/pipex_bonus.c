@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:53:59 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 12:26:15 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:10:24 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int ac, char **av, char **envp)
 		if (ac < 6)
 			exit_handler();
 		i = 3;
-		fd_out = open_file(av[ac - 1], 1, av, envp);
+		fd_out = open_file(av[ac - 1], 2, av, envp);
 		here_doc(av);
 	}
 	else
