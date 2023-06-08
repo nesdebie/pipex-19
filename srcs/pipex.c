@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:50:03 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 12:25:55 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/08 10:36:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ static void	exec(char *cmd, char **env)
 	path = get_path(s_cmd[0], env, 0);
 	if (!path)
 	{
-		ft_putstr_fd("pipex: ", 2);
-		ft_putstr_fd(s_cmd[0], 2);
-		ft_putendl_fd(" : command not found", 2);
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(s_cmd[0], 2);
 		ft_free_tab(s_cmd);
 		exit(127);
 	}
@@ -44,6 +43,14 @@ static void	child(char **av, int *p_fd, char **env)
 	int		fd;
 
 	fd = open_file(av[1], 0);
+	if (fd == -1)
+	{
+		ft_putstr_fd(av[2], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(av[1], 2);
+		ft_putendl_fd(": Permission denied", 2);
+		exit(0);
+	}
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
 	close(p_fd[0]);
@@ -55,6 +62,14 @@ static void	parent(char **av, int *p_fd, char **env)
 	int		fd;
 
 	fd = open_file(av[4], 1);
+	if (fd == -1)
+	{
+		ft_putstr_fd(av[3], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(av[4], 2);
+		ft_putendl_fd(": Permission denied", 2);
+		exit(1);
+	}
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);

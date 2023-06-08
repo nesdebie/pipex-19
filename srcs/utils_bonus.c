@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:47:24 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 11:27:51 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/08 10:42:17 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int	open_file(char *file, int in_out, char **av, char **envp)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (ret == -1)
 	{
-		ft_putstr_fd("pipex: file not found: ", 2);
-		ft_putendl_fd(file, 2);
-		exit(EXIT_SUCCESS);
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putendl_fd(": Permission denied", 2);
+		exit(0);
 	}
 	return (ret);
 }
